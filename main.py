@@ -17,6 +17,8 @@ attendance3={"Name": "ETC", "Code": "ENG1004"}
 attendance4={"Name": "Environmental Sustainability", "Code": "CHY1006"}
 attendance=[attendance1, attendance2, attendance3, attendance4]
 
+tasks=[]
+
 def subjects_menu():
  print(0,").", "Back")
  for i in range(len(subjects)):
@@ -50,8 +52,9 @@ def attendance_menu():
    print("Not possible")
    return
   attended=int(input("Classes attended?:\t"))
+  print()
   if attended>conducted or attended<0:
-   print("Not possible")
+   print("Not possible\n")
    return
   atp=(attended/conducted)*100
   print("Code:", x["Code"], "\n", "Classes Conducted:", conducted, "\n", "Classes Attended:", attended, "\n", "Attendance is:", round(atp, 2), "\n")
@@ -60,21 +63,77 @@ def attendance_menu():
    while (attended/(conducted+count+1))*100>=75:
     count+=1
    if count!=1:
-    print("You can miss", count, "classes")
+    print("You can miss", count, "classes, but you shouldn't\n")
    else:
-    print("You can miss", count, "class" )
+    print("You can miss", count, "class, but you shouldn't\n" )
   else:
-   print("Your attendance is below 75%. This is critical.")
+   print("Your attendance is below 75%. This is critical.\n")
    count=0
    while ((attended+count)/(conducted+count))*100<75:
     count+=1
-   print("You need to attend", count, " consecutive classes to reach the required threshold")
-   print("Take your attendance seriously, you will face problems with your exams if you do not take immediate action")
+   print("You need to attend", count, "consecutive classes to reach the required threshold.")
+   print("Take your attendance seriously.\n You will face problems with your exams if you do not take immediate action")
      
  else:
   print("Give a valid input\n")
   return
+
+def tasks_menu():
+ print("=======TASKS=======\n")
+ print("1). View Tasks")
+ print("2). Add Task")
+ print("3). Mark Task complete")
+ print("4). Delete Task")
+ print("0). Back\n")
+ ch=int(input("Select a choice:\t"))
+ print()
+
+ if ch==0:
+  return
  
+ elif ch==1:
+  print("View Tasks\n")
+
+  if len(tasks)==0:
+   print("There are no ongoing tasks at the moment\n")
+   
+
+  else:
+   for i in range(len(tasks)):
+    print("S.No.:", i+1)
+    print("Name:", tasks[i]["Name"])
+    print("Subject:", tasks[i]["Subject"])
+    print("Priority:", tasks[i]["Priority"])
+    print("Status:", tasks[i]["Status"])
+   print()
+   
+
+ elif ch==2:
+  print("Add Task")
+
+  name=input("Enter task name:\t")
+  sub=input("Enter subject code:\t")
+  pr=input("Enter priority level:\t")
+  print()
+
+  task={"Name": name, "Subject":sub, "Priority": pr, "Status": "Pending"}
+  tasks.append(task)
+  print("Task added successfully, visible on View Tasks page") 
+  
+
+ elif ch==3:
+   print("Mark Task complete")
+   m=int(input("Enter serial number of task to be marked as complete:\t"))
+   tasks[m-1]["Status"]="Completed"
+
+ elif ch==4:
+   l=int(input("Enter serial number of the task to be removed:\t"))
+   del tasks[l-1]
+   print("Task removed successfully")
+    
+ else:
+   print("Invalid choice")   
+
 
 while True:
   print("CampusOS")
@@ -99,7 +158,7 @@ while True:
    attendance_menu()
   
   elif ch==4:
-   print("Task module in progress")
+   tasks_menu()
   
   elif ch==5:
    print("Grades and CGPA module in progress")
