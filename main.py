@@ -21,6 +21,7 @@ tasks=[]
 grades=[]
  
 def subjects_menu():
+ print("==========SUBJECTS==========")
  while True:
   print(0,").", "Back")
   for i in range(len(subjects)):
@@ -40,10 +41,10 @@ def subjects_menu():
 def attendance_menu():
  while True:
   print("===========ATTENDANCE===========")
-  print(0,").", "Back")
   for i in range(len(attendance)):
     x=attendance[i]
     print(i+1,").", x["Name"])
+  print(0,").", "Back")
   print()
   n=int(input("Choose subject:\t"))
   print()
@@ -93,7 +94,7 @@ def attendance_menu():
 
 def tasks_menu():
  while True:
-  print("=======TASKS=======\n")
+  print("=======TASKS=======")
   print("1). View Tasks")
   print("2). Add Task")
   print("3). Mark Task complete")
@@ -132,42 +133,42 @@ def tasks_menu():
 
    task={"Name": name, "Subject": sub, "Priority": pr, "Status": "Pending"}
    tasks.append(task)
-   print("Task added successfully, visible on View Tasks page") 
+   print("Task added successfully, visible on View Tasks page\n") 
   
 
   elif ch==3:
     print("Mark Task complete")
     m=int(input("Enter serial number of task to be marked as complete:\t"))
     if len(tasks)==0:
-     print("There are no tasks, add some before completing :)")
+     print("There are no tasks, add some before completing :)\n")
     elif m<=0 or m>len(tasks):
-     print("Invalid Serial number") 
+     print("Invalid Serial number\n") 
     else:
      tasks[m-1]["Status"]="Completed"
+     print("Task marked as complete, congrats!")
 
   elif ch==4:
     l=int(input("Enter serial number of the task to be removed:\t"))
     if len(tasks)==0:
-     print("There are no tasks, add and complete some before deleting :)")
+     print("There are no tasks, add and complete some before deleting :)\n")
     elif l<=0 or l>len(tasks):
-     print("Invalid Serial number")
+     print("Invalid Serial number\n")
     else:
      del tasks[l-1]
-     print("Task removed successfully")
+     print("Task removed successfully\n")
     
   else:
-    print("Invalid choice")   
+    print("Invalid choice\n")   
     continue
 
 def grades_menu():
- 
  while True:
 
    print("0). Return")
    print("1). View Grades")
    print("2). Enter/Update Grades")
    print("3). Calculate CGPA")
-   print("4). Remove Subject grades\n")
+   print("4). Remove Subject Grade\n")
  
    n=int(input("Select an option:\t"))
    print()
@@ -290,8 +291,29 @@ while True:
   ch=int(input("What do you want to see?:\t"))
   print()
   if ch==1:
-   print("==========Dashboard========\n")
-     
+   print("==========Dashboard========")
+   print("Welcome, Master", p["Name"])
+   print("Subjects:", len(subjects))
+   print("Tasks:", len(tasks))
+
+   pending=0
+   completed=0
+
+   for i in tasks:
+    if i["Status"]=="Pending":
+     pending+=1
+    elif i["Status"]=="Completed":
+     completed+=1
+   print("Pending Tasks:", pending)
+   print("Completed Tasks:", completed) 
+   if len(tasks)==0:
+    print("Task Progress: 0%")
+   else:
+    tp=((completed/len(tasks))*100)
+    print("Task Progress:", round(tp,2), "%")
+   print("Grades entered:", len(grades))
+   print()
+
   elif ch==2: 
    subjects_menu()
    
@@ -314,5 +336,5 @@ while True:
    break
 
   else:
-   print("Invalid choice")
+   print("Invalid choice\n")
    continue
