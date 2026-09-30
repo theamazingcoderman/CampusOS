@@ -3,7 +3,7 @@ grades=[]
 def grades_menu():
  
  while True:
-
+   print("=======GRADES=======")
    print("0). Return")
    print("1). View Grades")
    print("2). Enter/Update Grades")
